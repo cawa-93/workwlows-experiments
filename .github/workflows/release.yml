@@ -27,17 +27,17 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/lint.yml
+      - uses: ./.github/workflows/lint.yml@main
 
   typechecking:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/typechecking.yml
+      - uses: ./.github/workflows/typechecking.yml@main
 
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/tests.yml
+      - uses: ./.github/workflows/tests.yml@main
 
   draft:
     needs: [ lint, typechecking, tests ]
