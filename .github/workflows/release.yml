@@ -1,15 +1,19 @@
 name: Release
 on:
+  # Just if you want to create Release manually
   workflow_dispatch:
+
   push:
     branches:
       - main
     paths-ignore:
       - '**.md'
-      - '**.spec.js'
       - '.idea'
       - '.gitignore'
       - '.github/**'
+      - '!.github/workflows/lint.yml'
+      - '!.github/workflows/typechecking.yml'
+      - '!.github/workflows/tests.yml'
       - '!.github/workflows/release.yml'
 
 concurrency:
@@ -24,7 +28,6 @@ defaults:
 
 jobs:
   lint:
-    if: startsWith('Hello world', 'B')
     uses: cawa-93/workwlows-experiments/.github/workflows/lint.yml@main
 
   typechecking:
@@ -34,7 +37,7 @@ jobs:
     uses: cawa-93/workwlows-experiments/.github/workflows/tests.yml@main
 
   draft:
-    needs: [ lint, typechecking, tests ]
+    needs: [ typechecking, tests ]
     runs-on: ubuntu-latest
     outputs:
       release-note: ${{ steps.release-note.outputs.release-note }}
