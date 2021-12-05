@@ -38,8 +38,8 @@ jobs:
 
   lint:
     needs: [constructor]
-    uses: ${{ needs.constructor.outputs.lint }}
-
+    uses: cawa-93/workwlows-experiments/.github/workflows/lint.yml@main
+    
   typechecking:
     uses: cawa-93/workwlows-experiments/.github/workflows/typechecking.yml@main
 
