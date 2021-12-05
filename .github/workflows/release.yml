@@ -31,15 +31,14 @@ jobs:
     steps:
       - run: |
           $currentRepo = "${{ github.repository }}"
-          $currentBranch = `echo ${GITHUB_REF##*/}`
-          $workflow = "$currentRepo/.github/workflows/lint.yml@$currentBranch"
+          $workflow = "$currentRepo/.github/workflows/lint.yml@main"
 
           echo "::set-output name=lint::$(echo $workflow)"
 
   lint:
     needs: [constructor]
     uses: cawa-93/workwlows-experiments/.github/workflows/lint.yml@main
-    
+
   typechecking:
     uses: cawa-93/workwlows-experiments/.github/workflows/typechecking.yml@main
 
