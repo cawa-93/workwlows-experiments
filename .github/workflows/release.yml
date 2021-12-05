@@ -25,13 +25,13 @@ defaults:
 jobs:
 
   lint:
-    uses: ${{ github.repository }}/.github/workflows/lint.yml@main
+    uses: cawa-93/workwlows-experiments/.github/workflows/lint.yml@main
 
   typechecking:
-    uses: ${{ github.repository }}/.github/workflows/typechecking.yml@main
+    uses: cawa-93/workwlows-experiments/.github/workflows/typechecking.yml@main
 
   tests:
-    uses: ${{ github.repository }}/.github/workflows/tests.yml@main
+    uses: cawa-93/workwlows-experiments/.github/workflows/tests.yml@main
 
   draft:
     needs: [ lint, typechecking, tests ]
