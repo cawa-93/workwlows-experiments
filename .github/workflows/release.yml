@@ -1,5 +1,6 @@
 name: Release
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -23,7 +24,23 @@ defaults:
 
 jobs:
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/workflows/lint.yml
+
+  typechecking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/workflows/typechecking.yml
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: .github/workflows/tests.yml
+
   draft:
+    needs: [ lint, typechecking, tests ]
     runs-on: ubuntu-latest
     outputs:
       release-note: ${{ steps.release-note.outputs.release-note }}
@@ -54,14 +71,6 @@ jobs:
       - name: Get version from current date
         id: version
         run: echo "::set-output name=build-version::$(node -e "try{console.log(require('./electron-builder.config.js').extraMetadata.version)}catch(e){console.error(e);process.exit(1)}")"
-
-
-      - name: Waiting on All checks
-        uses: lewagon/wait-on-check-action@v0.2
-        with:
-          ref: ${{ github.ref }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          running-workflow-name: 'draft'
 
       - name: Delete outdated drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0

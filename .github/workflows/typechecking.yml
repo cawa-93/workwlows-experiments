@@ -1,14 +1,6 @@
 name: Typechecking
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**.ts'
-      - '**.vue'
-      - '**/tsconfig.json'
-      - 'package-lock.json'
-      - '.github/workflows/typechecking.yml'
+  workflow_call:
   pull_request:
     paths:
       - '**.ts'
