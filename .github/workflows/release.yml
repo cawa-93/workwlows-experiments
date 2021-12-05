@@ -24,8 +24,21 @@ defaults:
 
 jobs:
 
+  constructor:
+    runs-on: ubuntu-latest
+    outputs:
+      lint: ${{ steps.constructor_step.outputs.lint }}
+    steps:
+      - run: |
+          $currentRepo = "${{ github.repository }}"
+          $currentBranch = `echo ${GITHUB_REF##*/}`
+          $workflow = "$currentRepo/.github/workflows/lint.yml@$currentBranch"
+
+          echo "::set-output name=lint::$(echo $workflow)"
+
   lint:
-    uses: cawa-93/workwlows-experiments/.github/workflows/lint.yml@main
+    needs: constructor
+    uses: ${{ needs.constructor.outputs.lint }}
 
   typechecking:
     uses: cawa-93/workwlows-experiments/.github/workflows/typechecking.yml@main
