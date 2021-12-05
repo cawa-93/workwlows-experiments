@@ -25,13 +25,13 @@ defaults:
 jobs:
 
   lint:
-    uses: ./.github/workflows/lint.yml@main
+    uses: ${{ github.repository }}/.github/workflows/lint.yml@main
 
   typechecking:
-    uses: ./.github/workflows/typechecking.yml@main
+    uses: ${{ github.repository }}/.github/workflows/typechecking.yml@main
 
   tests:
-    uses: ./.github/workflows/tests.yml@main
+    uses: ${{ github.repository }}/.github/workflows/tests.yml@main
 
   draft:
     needs: [ lint, typechecking, tests ]
