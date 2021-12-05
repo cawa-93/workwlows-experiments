@@ -37,7 +37,7 @@ jobs:
           echo "::set-output name=lint::$(echo $workflow)"
 
   lint:
-    needs: constructor
+    needs: [constructor]
     uses: ${{ needs.constructor.outputs.lint }}
 
   typechecking:
